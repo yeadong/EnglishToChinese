@@ -48,8 +48,10 @@ extension AppEnvironment {
 //                        Spacer()
 //                    }
             // 将 RecognizeView 设置为启动视图
-            RecognizeView()
-                .padding() // 添加 padding 以免文本贴边
+//            RecognizeView()
+//                .padding()      // 添加 padding 以免文本贴边
+            TranslationView().inject(diContainer)
+            
          }
     }
 

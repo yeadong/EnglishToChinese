@@ -11,21 +11,7 @@ struct AppEnvironment {
 extension AppEnvironment {
     static func bootstrap() -> AppEnvironment {
         let appState = Store<AppState>(AppState())
-        /*
-         To see the deep linking in action:
 
-         1. Launch the app in iOS 13.4 simulator (or newer)
-         2. Subscribe on Push Notifications with "Allow Push" button
-         3. Minimize the app
-         4. Drag & drop "push_with_deeplink.apns" into the Simulator window
-         5. Tap on the push notification
-
-         Alternatively, just copy the code below before the "return" and launch:
-
-            DispatchQueue.main.async {
-                deepLinksHandler.open(deepLink: .showCountryFlag(alpha3Code: "AFG"))
-            }
-        */
         let session = configuredURLSession()
         let webRepositories = configuredWebRepositories(session: session)
         let modelContainer = configuredModelContainer()
@@ -91,8 +77,16 @@ extension AppEnvironment {
                     UIApplication.shared.open($0, options: [:], completionHandler: nil)
                 }
             })
+        // 新增：初始化 TranslationInteractor
+                // 我们在这里注入 TextExtractionService
+        let translation = RealTranslationInteractor(
+                    appState: appState,
+                    extractionService: TextExtractionService()
+        )
         return .init(images: images,
                      countries: countries,
-                     userPermissions: userPermissions)
+                     userPermissions: userPermissions,
+                     translation: translation) // 记得在 DIContainer.Interactors 初始化方法中添加 translation 参数
+    
     }
 }

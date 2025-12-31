@@ -28,13 +28,17 @@ extension DIContainer {
         let images: ImagesInteractor
         let countries: CountriesInteractor
         let userPermissions: UserPermissionsInteractor
+        // 新增
+        let translation: TranslationInteractor
 
         static var stub: Self {
             .init(images: StubImagesInteractor(),
                   countries: StubCountriesInteractor(),
-                  userPermissions: StubUserPermissionsInteractor())
+                  userPermissions: StubUserPermissionsInteractor(),
+                  translation: StubTranslationInteractor())
         }
     }
+    
 }
 
 extension EnvironmentValues {

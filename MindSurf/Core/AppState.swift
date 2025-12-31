@@ -6,6 +6,8 @@ struct AppState: Equatable {
     var routing = ViewRouting()
     var system = System()
     var permissions = Permissions()
+    // 新增：直接添加到 AppState 根部
+    var translation = TranslationAppState()
 }
 
 extension AppState {
@@ -34,6 +36,13 @@ extension AppState {
             return pathToPermissions.appending(path: \.push)
         }
     }
+}
+
+struct TranslationAppState: Equatable {
+    var sourceText: String = ""
+    var translatedText: String = ""
+    var isProcessing: Bool = false
+    var error: String? = nil
 }
 
 func == (lhs: AppState, rhs: AppState) -> Bool {
